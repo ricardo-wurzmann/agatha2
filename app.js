@@ -70,6 +70,19 @@ app.get('/submaterias/:materia', (req, res) => {
   });
 });
 
+app.get('/questoes/:materia/:submateria', (req, res) => {
+    const { materia, submateria } = req.params;
+    console.log(materia, submateria);
+    db.all('SELECT * FROM questoes WHERE materia = ? AND submateria = ?', [materia, submateria], (err, rows) => {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+      res.json(rows);
+    });
+  });
+  
+  
+
 app.get('/', (req, res) => {
     res.send('Bem-vindo ao servidor!');
   });
@@ -78,8 +91,6 @@ app.get('/favicon.ico', (req, res) => {
     res.status(204).end(); // Envia uma resposta vazia com status 204 (No Content)
   });
   
-  
-
 app.listen(3005, () => {
   console.log('Servidor rodando na porta 3005');
 });
