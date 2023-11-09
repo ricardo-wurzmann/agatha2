@@ -1,5 +1,7 @@
+
+//Remover Parenteses com numero de cada materia
 const sqlite3 = require('sqlite3');
-const db = new sqlite3.Database('questoes.db');
+const db = new sqlite3.Database('questoes2 copy.db');
 
 function atualizarSubmateria(id, submateria) {
   return new Promise((resolve, reject) => {
@@ -24,7 +26,8 @@ db.serialize(async () => {
     });
 
     for (const row of rows) {
-      const submateriaAtualizada = row.submateria.replace(/\d+$/, '').trim();
+      // Remove apenas os números no final da string
+      const submateriaAtualizada = row.submateria.replace(/\s*\d+$/, '').trim();
       await atualizarSubmateria(row.id, submateriaAtualizada);
       console.log('Registro atualizado:', row.id, submateriaAtualizada);
     }
@@ -34,3 +37,43 @@ db.serialize(async () => {
     db.close();
   }
 });
+
+
+
+//Remover número antes do texto da questão
+// const sqlite3 = require('sqlite3');
+// const db = new sqlite3.Database('questoes2 copy.db');
+
+// function atualizarTextoDaQuestao(id, textoDaQuestao) {
+//   return new Promise((resolve, reject) => {
+//     db.run('UPDATE questoes SET texto_da_questao = ? WHERE id = ?', [textoDaQuestao, id], (err) => {
+//       if (err) {
+//         return reject(err);
+//       }
+//       resolve();
+//     });
+//   });
+// }
+
+// db.serialize(async () => {
+//   try {
+//     const rows = await new Promise((resolve, reject) => {
+//       db.all('SELECT id, texto_da_questao FROM questoes', [], (err, rows) => {
+//         if (err) {
+//           return reject(err);
+//         }
+//         resolve(rows);
+//       });
+//     });
+
+//     for (const row of rows) {
+//       const textoAtualizado = row.texto_da_questao.replace(/\d+\.\s*\(/, '(').trim();
+//       await atualizarTextoDaQuestao(row.id, textoAtualizado);
+//       console.log('Registro atualizado:', row.id, textoAtualizado);
+//     }
+//   } catch (err) {
+//     console.error('Erro:', err.message);
+//   } finally {
+//     db.close();
+//   }
+// });
