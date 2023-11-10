@@ -40,7 +40,7 @@
 
 
 
-//Remover número antes do texto da questão
+// Remover número antes do texto da questão
 // const sqlite3 = require('sqlite3');
 // const db = new sqlite3.Database('questoes2 copy.db');
 
@@ -78,6 +78,7 @@
 //   }
 // });
 
+//substituindo quebras de linhas por espaço nas linhas da coluna de materia
 const sqlite3 = require('sqlite3');
 const db = new sqlite3.Database('questoes2 copy.db'); // Certifique-se de que o caminho do banco de dados está correto
 
