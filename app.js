@@ -39,6 +39,16 @@ app.get('/questoes/:materia/:submateria', (req, res) => {
     });
 });
 
+app.get('/submaterias/:materia/:submateria/aleatorias', (req, res) => {
+  const { materia, submateria } = req.params;
+  db.all('SELECT id, texto_da_questao, opcao_a, opcao_b, opcao_c, opcao_d, opcao_e FROM questoes WHERE materia = ? AND submateria = ? ORDER BY RANDOM() LIMIT 5', [materia, submateria], (err, rows) => {
+      if (err) {
+          return res.status(500).json({ error: err.message });
+      }
+      res.json(rows);
+  });
+});
+
   
 
 app.get('/', (req, res) => {
